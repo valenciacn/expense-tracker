@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Money Track - 535250123</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="header-title">
+                <span class="icon" aria-hidden="true">💸</span>
+                <div>
+                    <h1>Money Track - 535250123</h1>
+                    <p class="subtitle">Laporan Keuangan Pribadi</p>
+                </div>
+            </div>
+        </header>
+
+        <section class="overview-grid">
+            <div class="card summary-card balance-card">
+                <span class="card-label">Total Saldo (Net)</span>
+                <h2 id="total-balance" class="total-value">Rp 0</h2>
+                <div class="cashflow-footer">
+                    <div class="cf-item income">
+                        <span>Pemasukan</span>
+                        <strong id="total-income-top">+ Rp 0</strong>
+                    </div>
+                    <div class="cf-item expense">
+                        <span>Pengeluaran</span>
+                        <strong id="total-expense-top">- Rp 0</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card chart-card">
+                <h3>📈 Distribusi Pengeluaran</h3>
+                <div class="chart-container">
+                    <canvas id="expenseChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="card form-card">
+            <h3>📝 Catat Transaksi Baru</h3>
+            <form id="transaction-form" autocomplete="off">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="tx-type">Tipe Arus Kas</label>
+                        <select id="tx-type" required>
+                            <option value="expense">📉 Pengeluaran</option>
+                            <option value="income">📈 Pemasukan</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tx-date">Tanggal</label>
+                        <input type="date" id="tx-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tx-name">Keterangan / Judul</label>
+                        <input type="text" id="tx-name" placeholder="Contoh: Gaji / Beli Makan" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tx-amount">Nominal (Rp)</label>
+                        <input type="number" id="tx-amount" placeholder="0" min="1" step="any" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="tx-category">Kategori</label>
+                        <select id="tx-category" required></select>
+                    </div>
+                </div>
+                <button type="submit" id="btn-submit">Simpan Transaksi</button>
+            </form>
+        </section>
+
+        <section class="card table-card">
+            <div class="table-header">
+                <h3>📊 Laporan Transaksi</h3>
+                
+                <div class="toolbar">
+                    <div class="tool-group">
+                        <label for="filter-period">Periode:</label>
+                        <select id="filter-period">
+                            <option value="all">Semua Waktu</option>
+                            <option value="daily">Hari Ini</option>
+                            <option value="monthly">Bulan Ini</option>
+                            <option value="yearly">Tahun Ini</option>
+                        </select>
+                    </div>
+                    <div class="tool-group">
+                        <label for="filter-category">Kategori:</label>
+                        <select id="filter-category">
+                            <option value="all">Semua Kategori</option>
+                        </select>
+                    </div>
+                    <div class="tool-group">
+                        <label for="sort-by">Urutkan:</label>
+                        <select id="sort-by">
+                            <option value="date-desc">Terbaru</option>
+                            <option value="date-asc">Terlama</option>
+                            <option value="amount-desc">Tertinggi</option>
+                            <option value="amount-asc">Terendah</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table class="notion-table">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Keterangan</th>
+                            <th>Kategori</th>
+                            <th class="col-amount">Arus Kas</th>
+                            <th class="col-action"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="transaction-list">
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="tfoot-label">Total Pemasukan</td>
+                            <td id="footer-total-income" class="col-amount text-income">+ Rp 0</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="tfoot-label">Total Pengeluaran</td>
+                            <td id="footer-total-expense" class="col-amount text-expense">- Rp 0</td>
+                            <td></td>
+                        </tr>
+                        <tr class="tfoot-net">
+                            <td colspan="3" class="tfoot-label">Net Saldo</td>
+                            <td id="footer-net-balance" class="col-amount">Rp 0</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
