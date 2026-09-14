@@ -270,4 +270,9 @@ filterPeriod.addEventListener('change', renderApp);
 filterCategory.addEventListener('change', renderApp);
 sortBy.addEventListener('change', renderApp);
 
+const expenseItems = transactions.filter(item => item.type === 'expense');
+const countExpense = expenseItems.length;
+
+document.getElementById('expense-counter').innerText = `Total: ${countExpense} data pengeluaran`;
+
 renderApp();
